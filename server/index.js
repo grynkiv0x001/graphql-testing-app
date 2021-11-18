@@ -1,8 +1,13 @@
+const { join } = require('path');
 const express = require('express');
 const cors = require('cors');
 const { graphqlHTTP } = require('express-graphql');
+const { loadSchemaSync } = require('@graphql-tools/load');
+const { GraphQLFileLoader } = require('@graphql-tools/graphql-file-loader');
 
-const schema = require('./schema');
+const schema = loadSchemaSync(join(__dirname, './schemas/schema.graphql'), {
+  loaders: [new GraphQLFileLoader()]
+});
 
 const app = express();
 
